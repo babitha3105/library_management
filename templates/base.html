@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Library{% endblock %}</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-dark bg-dark navbar-expand-lg">
+
+    <div class="container-fluid">
+
+        <a class="navbar-brand" href="/dashboard">
+            Library System
+        </a>
+
+        <div class="navbar-nav ms-auto">
+
+            <a class="nav-link text-white" href="/dashboard">Dashboard</a>
+            <a class="nav-link text-white" href="/books">Books</a>
+            <a class="nav-link text-white" href="/addbook">Add</a>
+            <a class="nav-link text-white" href="/issue">Issue</a>
+            <a class="nav-link text-white" href="/issuedbooks">Issued</a>
+            <a class="nav-link text-danger" href="/logout">Logout</a>
+
+        </div>
+
+    </div>
+
+</nav>
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="container mt-3">
+
+      {% for category, message in messages %}
+
+        <div class="alert alert-{{ category }} alert-dismissible fade show" role="alert">
+
+          {{ message }}
+
+          <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+
+        </div>
+
+      {% endfor %}
+
+    </div>
+  {% endif %}
+{% endwith %}
+
+<!-- PAGE CONTENT -->
+<div class="container mt-4">
+
+    {% block content %}
+
+    {% endblock %}
+
+</div>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

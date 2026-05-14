@@ -1,4 +1,4 @@
-from flask import Flask, request, render_template, session, redirect
+from flask import Flask, request, render_template, session, redirect,flash
 import sqlite3
 
 app = Flask(__name__)
@@ -24,8 +24,9 @@ def login():
         return redirect("/books")
 
     else:
-        return "Invalid Credentials"
-    
+       flash("Invalid username or password", "danger")
+       return redirect("/")
+
 @app.route('/addbook')
 def addbookpage():
     if 'user' not in session:
@@ -45,7 +46,10 @@ def add_book():
     cur.execute("INSERT INTO books(title,author,category,quantity) VALUES(?,?,?,?)",(title,author,category,quantity))
     conn.commit()
     conn.close()
-    return redirect('/addbook')
+    flash("Book added successfully!", "success")
+    return redirect('/books')
+
+
 @app.route("/books")
 def viewbook():
     if 'user' not in session:
@@ -72,6 +76,7 @@ def delete(id):
     cur.execute("DELETE FROM books WHERE id= ? ",(id,))
     conn.commit()
     conn.close()
+    flash("Book deleted successfully!", "danger")
     return redirect('/books')
 @app.route('/edit/<int:id>')
 
